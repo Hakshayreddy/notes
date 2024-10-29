@@ -19,11 +19,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
-        database = Room.databaseBuilder(
-            applicationContext,
-            NotesDB::class.java,
-            "notes_database"
-        ).build()
+        database = NotesDB.getDatabase(applicationContext)
         super.onCreate(savedInstanceState)
 
         val viewModel: NotesViewModel by viewModels { NotesViewModelFactory(database) }
