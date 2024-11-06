@@ -2,4 +2,6 @@
     <string name="app_name">Notes</string>
     <string name="back_button">Back Button</string>
     <string name="home_name">Notes</string>
+    <string name="db_user">admin</string>
+    <string name="db_password">notesdb20051KHR</string>
 </resources>

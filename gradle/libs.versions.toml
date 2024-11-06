@@ -14,12 +14,15 @@ activityCompose = "1.9.0"
 composeBom = "2024.04.01"
 lifecycleRuntimeKtxVersion = "2.6.2"
 lifecycleViewmodelCompose = "2.8.6"
+mariadbJavaClient = "3.1.2"
+mysqlConnectorJava = "8.0.15"
 navigationCompose = "2.8.3"
 navigationComposeVersion = "2.7.5"
 roomCommon = "2.6.1"
 roomKtx = "2.6.1"
 roomRuntime = "2.6.1"
 supportAnnotations = "28.0.0"
+foundationAndroid = "1.5.4"
 
 [libraries]
 androidx-activity-compose-v181 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
@@ -47,11 +50,14 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+mariadb-java-client = { module = "org.mariadb.jdbc:mariadb-java-client", version.ref = "mariadbJavaClient" }
 material3 = { module = "androidx.compose.material3:material3" }
+mysql-connector-java = { module = "mysql:mysql-connector-java", version.ref = "mysqlConnectorJava" }
 support-annotations = { group = "com.android.support", name = "support-annotations", version.ref = "supportAnnotations" }
 ui = { module = "androidx.compose.ui:ui" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

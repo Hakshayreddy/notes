@@ -22,7 +22,7 @@ import com.khr.notes.ui.components.AllNoteCards
 import com.khr.notes.ui.theme.NotesTheme
 
 @Composable
-fun HomeScreen(noteDao: NoteDAO, onNotesClicked: (Note) -> Unit, navigateUp : () -> Unit) {
+fun HomeScreen(viewModel: NotesViewModel, onNotesClicked: (Note) -> Unit, navigateUp : () -> Unit) {
     NotesTheme {
         Scaffold(
             modifier = Modifier
@@ -48,7 +48,7 @@ fun HomeScreen(noteDao: NoteDAO, onNotesClicked: (Note) -> Unit, navigateUp : ()
                         .absolutePadding(left = 10.dp, right = 10.dp)
                 ) {
                     AllNoteCards(
-                        dao = noteDao,
+                        viewModel = viewModel,
                         onClicked = onNotesClicked
                     )
                 }

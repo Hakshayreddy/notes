@@ -30,14 +30,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.khr.notes.data.Note
 import com.khr.notes.data.NoteDAO
+import com.khr.notes.ui.NotesViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun NoteCard(dao : NoteDAO, click: (Note)->Unit, note : Note, modifier: Modifier = Modifier) {
+fun NoteCard(viewModel: NotesViewModel, click: (Note)->Unit, note : Note, modifier: Modifier = Modifier) {
     var showDialog by remember { mutableStateOf(false) }
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -69,7 +71,6 @@ fun NoteCard(dao : NoteDAO, click: (Note)->Unit, note : Note, modifier: Modifier
             modifier = modifier
                 .absolutePadding(left = 20.dp,top = 5.dp,bottom = 10.dp),
             textAlign = TextAlign.Left
-            ,
         )
     }
     if (showDialog) {
@@ -84,7 +85,7 @@ fun NoteCard(dao : NoteDAO, click: (Note)->Unit, note : Note, modifier: Modifier
                     // Delete the note using dao
                     coroutineScope.launch {
                         withContext(Dispatchers.IO) {
-                            dao.delete(note)
+                            viewModel.deleteNote(note)
                         }
                     }
                 }) {
@@ -100,19 +101,14 @@ fun NoteCard(dao : NoteDAO, click: (Note)->Unit, note : Note, modifier: Modifier
     }
 }
 @Composable
-fun AllNoteCards(dao: NoteDAO, onClicked: (Note) -> Unit, modifier: Modifier = Modifier) {
-    var notes by remember { mutableStateOf<List<Note>>(emptyList()) }
+fun AllNoteCards(viewModel: NotesViewModel, onClicked: (Note) -> Unit, modifier: Modifier = Modifier) {
 
-    LaunchedEffect(key1 = Unit) { // Trigger this effect once
-        dao.getAllNotes().collect { newNotes ->
-            notes = newNotes // Update the state with the new notes
-        }
-    }
+    val notes by viewModel.allNotes.collectAsState(initial = emptyList())
     LazyColumn (
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(notes) { note->
-            NoteCard(dao = dao, note = note , click = onClicked )
+            NoteCard(viewModel = viewModel, note = note , click = onClicked )
         }
     }
 }

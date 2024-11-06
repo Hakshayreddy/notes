@@ -30,7 +30,8 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteScreen(dao : NoteDAO, note: Note, navigateUp : () -> Unit) {
+fun NoteScreen(viewModel: NotesViewModel, navigateUp : () -> Unit) {
+    val note = viewModel.note
     var title by remember { mutableStateOf(note.title) }
     var body by remember { mutableStateOf(note.body) }
     val scope = rememberCoroutineScope()
@@ -38,9 +39,9 @@ fun NoteScreen(dao : NoteDAO, note: Note, navigateUp : () -> Unit) {
         scope.launch {
             if(title.isNotEmpty() && body.isNotEmpty()) {
                 if (note.id == 0) {
-                    dao.insert(Note(title = title, body = body))
+                    viewModel.insertNote(Note(title = title, body = body))
                 } else {
-                    dao.update(Note(note.id, title, body))
+                    viewModel.updateNote(Note(note.id, title, body))
                 }
             }
             navigateUp()
@@ -55,11 +56,11 @@ fun NoteScreen(dao : NoteDAO, note: Note, navigateUp : () -> Unit) {
                     canNavigateBack = true,
                     navigateUp = {
                         scope.launch {
-                            if(title.length>0 && body.length>0) {
+                            if(title.isNotEmpty() && body.isNotEmpty()) {
                                 if (note.id == 0) {
-                                    dao.insert(Note(title = title, body = body))
+                                    viewModel.insertNote(Note(title = title, body = body))
                                 } else {
-                                    dao.update(Note(note.id, title, body))
+                                    viewModel.updateNote(Note(note.id, title, body))
                                 }
                             }
                             navigateUp()

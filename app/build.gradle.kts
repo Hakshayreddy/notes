@@ -35,6 +35,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -79,11 +80,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose.v275)
 
-    //Room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.support.annotations)
-    ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
-    implementation(libs.androidx.room.ktx)
+    //MySql AWS
+    implementation("mysql:mysql-connector-java:5.1.49")
+    implementation(libs.androidx.foundation.android)
+    implementation(libs.androidx.foundation.android)
+    implementation(libs.androidx.foundation.android)
 
     // Testing
     androidTestImplementation(libs.androidx.espresso.core.v351)

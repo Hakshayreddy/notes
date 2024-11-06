@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.khr.notes.data.Note
 import com.khr.notes.ui.HomeScreen
 import com.khr.notes.ui.NoteScreen
 import com.khr.notes.ui.NotesViewModel
@@ -38,7 +39,6 @@ fun NotesApp(
     viewModel: NotesViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
     NavHost(
         navController = navController,
         startDestination = NotesScreen.Home.name,
@@ -46,9 +46,9 @@ fun NotesApp(
     ) {
         composable(route = NotesScreen.Home.name) {
             HomeScreen(
-                noteDao = uiState.noteDao,
+                viewModel = viewModel,
                 onNotesClicked = {note->
-                    viewModel.setNote(note)
+                    viewModel.currentNote(note)
                     navController.navigate(NotesScreen.Notes.name)
                 },
                 navigateUp = { navController.navigateUp() }
@@ -56,9 +56,8 @@ fun NotesApp(
         }
         composable(route = NotesScreen.Notes.name) {
             NoteScreen(
-                note = uiState.note,
+                viewModel = viewModel,
                 navigateUp = { navController.navigateUp() },
-                dao = uiState.noteDao
             )
         }
     }
